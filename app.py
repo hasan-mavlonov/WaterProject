@@ -4,6 +4,7 @@ from usermanager import UserManager
 # admin login = 'admin'
 # admin password = 'admin'
 def user_menu(email):
+    UserManager(email).is_active_true()
     input('User Menu: ')
     pass
 
@@ -14,6 +15,7 @@ def admin_menu():
 
 
 def auth_menu():
+    UserManager.all_to_false()
     text = """
     1. Register.
     2. Login
@@ -37,6 +39,7 @@ def auth_menu():
             gender = input("Enter your gender: ")
             if user.register_a_user(password, full_name, age, gender):
                 print('The user successfully registered.')
+                auth_menu()
         else:
             print('The user already exists.')
             auth_menu()
@@ -61,4 +64,4 @@ def auth_menu():
 
 
 if __name__ == '__main__':
-    pass
+    auth_menu()

@@ -17,10 +17,11 @@ class UserManager:
                 'full_name': full_name,
                 'age': age,
                 'gender': gender,
-                'password': hashed_password
+                'password': hashed_password,
+                'is_active': False
             })
-            if JsonManager(filename).write(data):
-                return True
+            JsonManager(filename).write(data)
+            return True
         except Exception as e:
             print(e)
             return False
@@ -59,3 +60,19 @@ class UserManager:
         except Exception as e:
             print(e)
             return False
+
+    @staticmethod
+    def all_to_false():
+        data = JsonManager(filename).read()
+        for user in data:
+            user['is_active'] = False
+        JsonManager(filename).write(data)
+        return True
+
+    def is_active_true(self):
+        data = JsonManager(filename).read()
+        for user in data:
+            if user['gmail'] == self.email:
+                user['is_active'] = True
+                JsonManager(filename).write(data)
+                return True
