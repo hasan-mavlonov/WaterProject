@@ -1,17 +1,56 @@
 from usermanager import UserManager
+from balance import add_balance_order
 
 
-# admin login = 'admin'
-# admin password = 'admin'
+admin_email = 'admin'
+admin_password = 'admin'
+
+
 def user_menu(email):
     UserManager(email).is_active_true()
-    input('User Menu: ')
-    pass
+    text = """
+    1.Add balance water
+    2.Show my balance
+    3.Buy water from balance
+    4.Log-out
+    """
+    print(text)
+
+    user_input = input('Enter a number: ')
+    if user_input == '1':
+        add_balance_order()
+        return user_menu(email)
+    elif user_input == '2':
+        pass
+    elif user_input == '3':
+        pass
+    elif user_input == '4':
+        UserManager(email).all_to_false()
+        return auth_menu()
+    else:
+        print('Wrong number, try again!')
+        return user_menu(email)
 
 
 def admin_menu():
-    input('Admin Menu: ')
-    pass
+    text = """
+        1.Show all users
+        2.Show each user's balance
+        3.Log-out
+        """
+    print(text)
+
+    user_input = input('Enter a number: ')
+    if user_input == '1':
+        UserManager.show_all_users()
+        return admin_menu()
+    elif user_input == '2':
+        pass
+    elif user_input == '3':
+        return auth_menu()
+    else:
+        print('Wrong number, try again!')
+        return admin_menu()
 
 
 def auth_menu():
@@ -21,7 +60,9 @@ def auth_menu():
     2. Login
     3. Exit
     """
-    user_input = input(text)
+    print(text)
+
+    user_input = input('Enter a number: ')
     if user_input == '1':
         email = input("Email: ")
         if email == 'admin':
@@ -56,6 +97,9 @@ def auth_menu():
             password = input("Password: ")
             if UserManager(email).check_password(password):
                 user_menu(email)
+        else:
+            print('Wrong email')
+            return auth_menu()
     elif user_input == '3':
         exit()
     else:

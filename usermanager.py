@@ -2,6 +2,7 @@ from jsonManager import JsonManager
 import hashlib
 
 filename = 'data/users.json'
+user_manager = JsonManager(filename)
 
 
 class UserManager:
@@ -11,7 +12,7 @@ class UserManager:
     def register_a_user(self, password, full_name, age, gender):
         try:
             hashed_password = hashlib.sha256(password.encode()).hexdigest()
-            data = JsonManager(filename).read()
+            data = user_manager.read()
             data.append({
                 'gmail': self.email,
                 'full_name': full_name,
@@ -20,7 +21,7 @@ class UserManager:
                 'password': hashed_password,
                 'is_active': False
             })
-            JsonManager(filename).write(data)
+            user_manager.write(data)
             return True
         except Exception as e:
             print(e)
@@ -28,7 +29,7 @@ class UserManager:
 
     def check_email(self):
         try:
-            data = JsonManager(filename).read()
+            data = user_manager.read()
             for user in data:
                 if user['gmail'] == self.email:
                     return True
@@ -40,7 +41,7 @@ class UserManager:
 
     def check_password(self, password):
         try:
-            data = JsonManager(filename).read()
+            data = user_manager.read()
             hashed_password = hashlib.sha256(password.encode()).hexdigest()
             for user in data:
                 if user['gmail'] == self.email:
@@ -53,9 +54,10 @@ class UserManager:
     @staticmethod
     def show_all_users():
         try:
-            data = JsonManager(filename).read()
+            data = user_manager.read()
+            print('Full name - Email')
             for user in data:
-                print(user['gmail'])
+                print(f"{user['full_name']} - {user['gmail']}")
             return True
         except Exception as e:
             print(e)
@@ -63,16 +65,16 @@ class UserManager:
 
     @staticmethod
     def all_to_false():
-        data = JsonManager(filename).read()
+        data = user_manager.read()
         for user in data:
             user['is_active'] = False
-        JsonManager(filename).write(data)
+        user_manager.write(data)
         return True
 
     def is_active_true(self):
-        data = JsonManager(filename).read()
+        data = user_manager.read()
         for user in data:
             if user['gmail'] == self.email:
                 user['is_active'] = True
-                JsonManager(filename).write(data)
+                user_manager.write(data)
                 return True
