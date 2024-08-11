@@ -1,5 +1,5 @@
 from usermanager import UserManager
-from balance import add_balance_order, each_balance, my_balance
+from balance import add_balance_order, each_balance, my_balance, buy_water
 
 
 admin_email = 'admin'
@@ -24,7 +24,8 @@ def user_menu(email):
         my_balance()
         return user_menu(email)
     elif user_input == '3':
-        pass
+        buy_water()
+        user_menu(email)
     elif user_input == '4':
         UserManager(email).all_to_false()
         return auth_menu()

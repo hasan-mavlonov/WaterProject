@@ -68,3 +68,36 @@ def my_balance():
             print(f"{i['email']} - {i['quantity']} - {i['price']}")
             break
     return
+
+
+def return_balance():
+    all_data = balance_manager.read()
+    user = active_user()
+    for i in all_data:
+        if i['email'] == user['gmail']:
+            return i
+
+
+def buy_water():
+    try:
+        active = active_user()
+        all_data = balance_manager.read()
+        quantity = int(input('Enter water quantity: '))
+        my_ball = return_balance()
+        if quantity <= my_ball['quantity']:
+            print('Success!')
+            print(f'Total cost: {my_ball["price"]*quantity}')
+            print(f'Your balance: {my_ball["quantity"] - quantity}')
+            i = 0
+            while i < len(all_data):
+                if all_data[i]['email'] == active['gmail']:
+                    all_data[i]['quantity'] -= quantity
+                    balance_manager.write(all_data)
+                    return
+                i += 1
+        else:
+            print('You do not have that many products!')
+            return
+    except ValueError:
+        print('Quantity must be a whole number!')
+        return buy_water()
