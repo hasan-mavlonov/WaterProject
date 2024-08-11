@@ -1,5 +1,5 @@
 from usermanager import UserManager
-from balance import add_balance_order
+from balance import add_balance_order, each_balance, my_balance
 
 
 admin_email = 'admin'
@@ -21,7 +21,8 @@ def user_menu(email):
         add_balance_order()
         return user_menu(email)
     elif user_input == '2':
-        pass
+        my_balance()
+        return user_menu(email)
     elif user_input == '3':
         pass
     elif user_input == '4':
@@ -45,7 +46,8 @@ def admin_menu():
         UserManager.show_all_users()
         return admin_menu()
     elif user_input == '2':
-        pass
+        each_balance()
+        admin_menu()
     elif user_input == '3':
         return auth_menu()
     else:

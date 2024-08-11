@@ -52,7 +52,19 @@ def add_balance_order():
         return False
 
 
+def each_balance():
+    all_data = balance_manager.read()
+    print('User email - quantity - price')
+    for i in all_data:
+        print(f"{i['email']} - {i['quantity']} - {i['price']}")
 
 
-
-
+def my_balance():
+    all_data = balance_manager.read()
+    user = active_user()
+    print('User email - quantity - price')
+    for i in all_data:
+        if i['email'] == user['gmail']:
+            print(f"{i['email']} - {i['quantity']} - {i['price']}")
+            break
+    return
